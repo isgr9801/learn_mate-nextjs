@@ -18,48 +18,40 @@ export default function ChannelChat({ roomInfo }: { roomInfo: ChatChannel }) {
 			`${Base_Event}`,
 			(response: { payload: any; events: string | string[] }) => {
 				const payload: any = response?.payload;
+
+				if (!payload || payload.channel_Id !== channelId) return;
+
+				// Handle create event
 				if (response.events.includes(`${Base_Event}.*.create`)) {
-					if (payload && payload.channel_Id !== channelId) return;
-					mutateMessages((prev: any[]) => {
-						const index = prev?.findIndex(
-							(message) => message.$id !== payload.$id
-						);
-						if (prev && index !== undefined && index !== -1) {
-							prev[index] = payload;
-							return prev;
-						}
-						return [...(prev ?? []), payload];
+					mutateMessages((prev) => {
+						if (!prev) return [payload]; // First message
+						const exists = prev.some((msg) => msg.$id === payload.$id);
+						if (exists) return prev;
+						return [...prev, payload];
 					});
-				} else if (response.events.includes(`${Base_Event}.*.update`)) {
-					if (payload && payload.channel_Id !== channelId) return;
-					mutateMessages((prev: any[]) => {
+				}
+
+				// Handle update event
+				if (response.events.includes(`${Base_Event}.*.update`)) {
+					mutateMessages((prev) => {
 						if (!prev) return prev;
-						const index = prev?.findIndex(
-							(message) => message.$id === payload.$id
-						);
-						if (index !== undefined && index !== -1) {
-							prev[index] = payload;
-						}
-						return [...(prev ?? [])];
+						return prev.map((msg) => (msg.$id === payload.$id ? payload : msg));
 					}, false);
-				} else if (response.events.includes(`${Base_Event}.*.delete`)) {
-					if (payload && payload.channel_Id !== channelId) return;
-					mutateMessages((prev: any[]) => {
+				}
+
+				// Handle delete event
+				if (response.events.includes(`${Base_Event}.*.delete`)) {
+					mutateMessages((prev) => {
 						if (!prev) return prev;
-						const index = prev?.findIndex(
-							(message) => message.$id === payload.$id
-						);
-						if (index !== undefined && index !== -1) {
-							prev.splice(index, 1);
-						}
-						return [...(prev ?? [])];
+						return prev.filter((msg) => msg.$id !== payload.$id);
 					}, false);
 				}
 			}
 		);
-		// Closes the subscription.
-		() => unsubscribe();
-	}, []);
+
+		// Cleanup subscription on unmount
+		return () => unsubscribe();
+	}, [channelId, mutateMessages]);
 
 	return <ChatRoomView roomInfo={roomInfo} messages={messages} />;
 }

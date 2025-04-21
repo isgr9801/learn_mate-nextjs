@@ -1,6 +1,7 @@
-## LearnMate
 
-LearnMate is a collaborative online learning platform that brings students together in virtual study groups. The platform offers a seamless and interactive study experience, empowering students to connect, collaborate, and learn together, regardless of their physical location.
+## SynapseStudy
+
+SynapseStudy is a collaborative online learning platform that brings students together in virtual study groups. The platform offers a seamless and interactive study experience, empowering students to connect, collaborate, and learn together, regardless of their physical location.
 
 ### Key Features
 
@@ -21,17 +22,17 @@ LearnMate is a collaborative online learning platform that brings students toget
 
 ### Getting Started
 
-To get started with LearnMate, follow the instructions below:
+To get started with SynapseStudy, follow the instructions below:
 
-1. Clone the repository
-2. Install the dependencies: `npm install`
+1. Clone the repository: `git clone https://github.com/g1mishra/SynapseStudy.git`
+2. Install the dependencies: `pnpm install`
 3. Configure the Appwrite endpoint and project details in the necessary files.
-4. Run the development server: `npm run dev`
+4. Run the development server: `pnpm run dev`
 5. Access the application in your browser at `http://localhost:3000`
 
 <!-- ### Contribution Guidelines
 
-We welcome contributions from the community to make LearnMate even better. If you'd like to contribute, please follow the guidelines outlined in [CONTRIBUTING.md](link-to-contributing-file). -->
+We welcome contributions from the community to make SynapseStudy even better. If you'd like to contribute, please follow the guidelines outlined in [CONTRIBUTING.md](link-to-contributing-file). -->
 
 ### License
 
@@ -39,6 +40,6 @@ This project is licensed under the [MIT License](link-to-license-file). Feel fre
 
 <!-- ### Acknowledgments
 
-We would like to thank the contributors and open-source community for their valuable contributions to the development of LearnMate. -->
+We would like to thank the contributors and open-source community for their valuable contributions to the development of SynapseStudy. -->
 
 ---
